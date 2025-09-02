@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>コズミック　デビル</title>
+  <link rel="stylesheet" href="fight.css" />
+</head>
+<body>
+  <!-- スタート画面 -->
+  <div class="start-screen">
+    <h1>冒険の始まり</h1>
+    <button id="start-button">スタート</button>
+  </div>
+
+  <!-- キャラクターセレクト画面 -->
+  <div class="select-screen hidden">
+    <h2>キャラクターを選んでください</h2>
+    <div class="character-list">
+      <div class="character" data-character="戦士">
+        <img src="beastman.png" alt="戦士" />
+        <p>戦士</p>
+      </div>
+      <div class="character" data-character="魔法使い">
+        <img src="wizard.png" alt="魔法使い" />
+        <p>魔法使い</p>
+      </div>
+      <div class="character" data-character="弓使い">
+        <img src="archer.png" alt="弓使い" />
+        <p>弓使い</p>
+      </div>
+    </div>
+    <button id="adventure-button" disabled>冒険スタート！</button>
+  </div>
+
+  <!-- 説明画面 -->
+  <div id="instruction-screen" class="hidden">
+    <div id="instruction-text"></div>
+    <button id="next-instruction-button">次へ</button>
+  </div>
+
+  <!-- コンティニュー画面 -->
+  <div id="continue-screen" class="hidden">
+    <h2>ゲームオーバー！</h2>
+    <p>続けますか？</p>
+    <button id="continue-button">コンティニュー</button>
+  </div>
+
+  <!-- 戦闘画面 -->
+  <div class="battle-screen hidden">
+    <canvas id="gameCanvas" width="600" height="400"></canvas>
+    <p>＜ー　、　ー＞キーで移動、スペースキーで攻撃！</p>
+  </div>
+
+  <script src="king.js"></script>
+</body>
+</html>
