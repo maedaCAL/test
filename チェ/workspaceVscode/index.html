@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>弾幕シューティング（Canvas版テンプレート）</title>
+  <style>
+    /* シンプルなセンタリング。キャンバスは固定サイズ */
+    body {
+      margin: 0;
+      background: #111;
+      color: #eee;
+      font-family: "Meiryo", "Noto Sans JP", sans-serif;
+    }
+
+    #wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    canvas {
+      background: #000;
+      box-shadow: 0 0 24px rgba(0, 0, 0, 0.6);
+    }
+
+    .tips {
+      position: fixed;
+      bottom: 8px;
+      left: 8px;
+      font-size: 12px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrap">
+    <canvas id="game" width="800" height="600"></canvas>
+  </div>
+  <div class="tips">▲▼◀▶：移動　Shift：精密移動　Z：攻撃　C：コイン投入　Enter/Space：決定・リトライ</div>
+  <script type="module" src="./src/main.js"></script>
+</body>
+
+</html>
