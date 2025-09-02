@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shooting Game</title>
+<style>
+  body {
+    margin: 0;
+    background: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  canvas {
+    background: #111;
+    border: #268cab solid 2px;
+  }
+</style>
+</head>
+<body>
+<canvas id="gameCanvas" width="1000" height="600"></canvas>
+
+<script>
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+// Game states
+let gameState = "start"; // "start", "playerSelect", "playing", "gameOver", "leaderboard", "win"
+
+// Images
+const playerImg = new Image();
+playerImg.src = "./player.png";
+const enemySoldierImg = new Image();
+enemySoldierImg.src = "./soldier.webp";
+const enemyLeaderImg = new Image();
+enemyLeaderImg.src = "./leader.png";
+const enemyBossImg = new Image();
+enemyBossImg.src = "./boss.png";
+
+// Player
+const player = {
+  x: canvas.width/2 - 25,
+  y: canvas.height - 100,
+  width: 50,
+  height: 100,
+  speed: 4,
+  bullets: [],
+  shootCooldown: 0,
+  hp: 100,
+  maxHp: 100
+};
+
+// Enemies & bullets
+let enemies = [];
+let enemyBullets = [];
+let score = 0;
+let scores = [];
+let currentPlayer = "Player";
+let bossSpawned = false;
+
+// Controls
+const keys = {};
+document.addEventListener("keydown", (e)=>keys[e.key]=true);
+document.addEventListener("keyup", (e)=>keys[e.key]=false);
+
+// -------- FUNCTIONS --------
+function goToPlayerSelect() {
+  gameState = "playerSelect";
+}
+
+function selectPlayer(name) {
+  currentPlayer = name;
+  startGame();
+  gameState = "playing";
+}
+
+function spawnEnemy() {
+  if(score >= 1000) {
+    if(!bossSpawned) {
+      enemies.push({
+        x: canvas.width/2-80,
+        y: 100,
+        width: 160,
+        height: 160,
+        type:"boss",
+        hp: 300,
+        maxHp: 300,
+        shootCooldown: 80,
+        damage: 30,
+        img: enemyBossImg
+      });
+      bossSpawned = true;
+    }
+    return; // only one boss
+  }
+
+  let type="soldier", hp=50, damage=10, img=enemySoldierImg;
+  if(score >= 500){ type="leader"; hp=150; damage=20; img=enemyLeaderImg; }
+
+  enemies.push({
+    x: Math.random()*(canvas.width-60),
+    y: 80,
+    width: 60,
+    height: 60,
+    type,
+    hp,
+    maxHp: hp,
+    shootCooldown: Math.random()*200+50,
+    damage,
+    img
+  });
+}
+
+function startGame() {
+  player.x = canvas.width/2-25;
+  player.y = canvas.height-100;
+  player.hp = player.maxHp;
+  player.bullets = [];
+  enemies = [];
+  enemyBullets = [];
+  score = 0;
+  bossSpawned = false;
+  spawnEnemy();
+}
+
+function endGame() {
+  gameState = "gameOver";
+}
+
+function winGame() {
+  gameState = "win";
+}
+
+function saveScore() {
+  scores.push({name: currentPlayer, score});
+}
+
+function showLeaderboard() {
+  gameState = "leaderboard";
+}
+
+function update() {
+  // Player movement
+  if(keys["ArrowLeft"] && player.x>0) player.x -= player.speed;
+  if(keys["ArrowRight"] && player.x+player.width<canvas.width) player.x += player.speed;
+
+  // Shooting
+  if(keys[" "] && player.shootCooldown<=0){
+    player.bullets.push({x:player.x+player.width/2-2,y:player.y,width:4,height:10,speed:8,damage:2});
+    player.shootCooldown = 5;
+  }
+  if(player.shootCooldown>0) player.shootCooldown--;
+
+  // Move bullets
+  player.bullets.forEach((b,i)=>{ b.y-=b.speed; if(b.y<0) player.bullets.splice(i,1); });
+  enemyBullets.forEach((b,i)=>{ b.y+=b.speed; if(b.y>canvas.height) enemyBullets.splice(i,1); });
+
+  // Enemy shooting
+  enemies.forEach(enemy=>{
+    enemy.shootCooldown--;
+    if(enemy.shootCooldown<=0){
+      enemyBullets.push({x:enemy.x+enemy.width/2-2,y:enemy.y+enemy.height,width:4,height:10,speed:2,damage:enemy.damage});
+      enemy.shootCooldown = Math.random()*200+100;
+    }
+  });
+
+  // Player bullets vs enemies
+  player.bullets.forEach((bullet,bi)=>{
+    enemies.forEach((enemy,ei)=>{
+      if(bullet.x<enemy.x+enemy.width && bullet.x+bullet.width>enemy.x &&
+         bullet.y<enemy.y+enemy.height && bullet.y+bullet.height>enemy.y){
+        enemy.hp -= bullet.damage;
+        player.bullets.splice(bi,1);
+        if(enemy.hp<=0){
+          enemies.splice(ei,1);
+          score+=100;
+          if(enemy.type==="boss"){
+            winGame();
+          } else {
+            spawnEnemy();
+            spawnEnemy();
+          }
+        }
+      }
+    });
+  });
+
+  // Enemy bullets vs player
+  enemyBullets.forEach((bullet,bi)=>{
+    if(bullet.x<player.x+player.width && bullet.x+bullet.width>player.x &&
+       bullet.y<player.y+player.height && bullet.y+bullet.height>player.y){
+      player.hp -= bullet.damage;
+      enemyBullets.splice(bi,1);
+      if(player.hp<=0) endGame();
+    }
+  });
+}
+
+function drawGame() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  // Player
+  ctx.drawImage(playerImg, player.x, player.y, player.width, player.height);
+  ctx.fillStyle="white"; ctx.fillRect(player.x,player.y-10,player.width,6);
+  ctx.fillStyle="lime"; ctx.fillRect(player.x,player.y-10,player.width*(player.hp/player.maxHp),6);
+
+  // Bullets
+  ctx.fillStyle="yellow";
+  player.bullets.forEach(b=>ctx.fillRect(b.x,b.y,b.width,b.height));
+
+  ctx.fillStyle="lime";
+  enemyBullets.forEach(b=>ctx.fillRect(b.x,b.y,b.width,b.height));
+
+  // Enemies
+  enemies.forEach(e=>{
+    ctx.drawImage(e.img,e.x,e.y,e.width,e.height);
+
+    ctx.fillStyle="#fff"; ctx.fillRect(e.x, e.y-8, e.width, 5);
+    let barColor="lime";
+    if(e.type==="leader") barColor="yellow";
+    if(e.type==="boss") barColor="red";
+    ctx.fillStyle=barColor;
+    ctx.fillRect(e.x,e.y-8,e.width*(e.hp/e.maxHp),5);
+  });
+
+  // Score
+  ctx.fillStyle="white"; ctx.font="20px Arial";
+  ctx.fillText("Score: "+score,10,25);
+  ctx.fillText("Player HP: "+player.hp,10,50);
+}
+
+// -------- SCREENS --------
+function drawStart() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="white";
+  ctx.font="40px Arial";
+  ctx.fillText("Shooting Game", canvas.width/2-150, canvas.height/2-40);
+  ctx.font="20px Arial";
+  ctx.fillText("Click to Start", canvas.width/2-70, canvas.height/2);
+  canvas.onclick = goToPlayerSelect;
+}
+
+function drawPlayerSelect() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="white";
+  ctx.font="30px Arial";
+  ctx.fillText("Select Player", canvas.width/2-100,100);
+  ["Player 1","Player 2","Player 3"].forEach((p,i)=>{
+    ctx.fillText(p, canvas.width/2-50,200+i*50);
+  });
+  canvas.onclick = (e)=>{
+    const y=e.offsetY;
+    if(y>180 && y<220) selectPlayer("Player 1");
+    else if(y>230 && y<270) selectPlayer("Player 2");
+    else if(y>280 && y<320) selectPlayer("Player 3");
+  };
+}
+
+function drawGameOver() {
+  ctx.fillStyle="red";
+  ctx.font="40px Arial";
+  ctx.fillText("GAME OVER", canvas.width/2-120, canvas.height/2-40);
+  ctx.fillStyle="white";
+  ctx.font="20px Arial";
+  ctx.fillText("Final Score: "+score, canvas.width/2-70, canvas.height/2);
+
+  // Retry button
+  ctx.fillStyle="green";
+  ctx.fillRect(canvas.width/2-100, canvas.height/2+40, 80, 40);
+  ctx.fillStyle="white";
+  ctx.fillText("Retry", canvas.width/2-85, canvas.height/2+70);
+
+  // Continue button
+  ctx.fillStyle="blue";
+  ctx.fillRect(canvas.width/2+20, canvas.height/2+40, 100, 40);
+  ctx.fillStyle="white";
+  ctx.fillText("Continue", canvas.width/2+30, canvas.height/2+70);
+
+  canvas.onclick = (e)=>{
+    const {offsetX:x, offsetY:y} = e;
+    if(x>canvas.width/2-100 && x<canvas.width/2-20 && y>canvas.height/2+40 && y<canvas.height/2+80){
+      startGame(); gameState="playing";
+    }
+    if(x>canvas.width/2+20 && x<canvas.width/2+120 && y>canvas.height/2+40 && y<canvas.height/2+80){
+      saveScore(); showLeaderboard();
+    }
+  };
+}
+
+function drawWin() {
+  ctx.fillStyle="lime";
+  ctx.font="40px Arial";
+  ctx.fillText("YOU WIN!", canvas.width/2-100, canvas.height/2-40);
+  ctx.fillStyle="white";
+  ctx.font="20px Arial";
+  ctx.fillText("Final Score: "+score, canvas.width/2-70, canvas.height/2);
+
+  // Continue button
+  ctx.fillStyle="blue";
+  ctx.fillRect(canvas.width/2-70, canvas.height/2+40, 140, 40);
+  ctx.fillStyle="white";
+  ctx.fillText("Continue", canvas.width/2-40, canvas.height/2+70);
+
+  canvas.onclick = (e)=>{
+    const {offsetX:x, offsetY:y} = e;
+    if(x>canvas.width/2-70 && x<canvas.width/2+70 && y>canvas.height/2+40 && y<canvas.height/2+80){
+      saveScore(); showLeaderboard();
+    }
+  };
+}
+
+function drawLeaderboard() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="white";
+  ctx.font="30px Arial";
+  ctx.fillText("Leaderboard", canvas.width/2-100,100);
+
+  scores.sort((a,b)=>b.score-a.score);
+  scores.forEach((s,i)=>{
+    ctx.fillText(`${s.name}: ${s.score}`, canvas.width/2-100, 160+i*40);
+  });
+
+  ctx.fillStyle="yellow";
+  ctx.fillRect(canvas.width/2-70, canvas.height-80, 140,50);
+  ctx.fillStyle="black";
+  ctx.fillText("Play Again", canvas.width/2-65, canvas.height-45);
+
+  canvas.onclick=(e)=>{
+    const {offsetX:x, offsetY:y} = e;
+    if(x>canvas.width/2-70 && x<canvas.width/2+70 && y>canvas.height-80 && y<canvas.height-30){
+      goToPlayerSelect();
+    }
+  };
+}
+
+// -------- MAIN LOOP --------
+function gameLoop() {
+  if(gameState==="start") drawStart();
+  else if(gameState==="playerSelect") drawPlayerSelect();
+  else if(gameState==="playing"){ update(); drawGame(); }
+  else if(gameState==="gameOver") drawGameOver();
+  else if(gameState==="win") drawWin();
+  else if(gameState==="leaderboard") drawLeaderboard();
+
+  requestAnimationFrame(gameLoop);
+}
+gameLoop();
+</script>
+</body>
+</html>
