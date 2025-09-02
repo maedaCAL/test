@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <!-- 귀여운 글씨체 불러오기 -->
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        main.home h1 {
+            font-family: 'Baloo 2', cursive;
+            font-size: 3em;
+            font-weight: 700;
+            color: #ff69b4; /* 한 톤 핑크 */
+            text-shadow: 2px 2px 4px rgba(255,182,193,0.5), 
+                         -2px -2px 4px rgba(255,182,193,0.5); /* 입체감 있는 귀여운 그림자 */
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        main.home img {
+            width: 80%;
+            max-width: 600px;
+            border-radius: 15px;
+        }
+
+        /* 반응형 */
+        @media (max-width: 600px) {
+            main.home h1 {
+                font-size: 2em;
+            }
+            main.home img {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <ul class="menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About us</a></li>
+            <li><a href="diary.html">Diary</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="access.html">Access</a></li>
+        </ul>
+    </header>
+
+   <main class="home">
+    <img src="images/kawa.webp" alt="ホーム画像" style="width: 60%; max-width: 400px; border-radius: 15px;">
+    <h1>ちいかわ株式会社</h1>
+</main>
+</body>
+</html>

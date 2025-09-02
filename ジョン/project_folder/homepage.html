@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ホームページ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 상단 메뉴 -->
+    <header>
+        <nav>
+            <ul class="menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About us</a></li>
+                <li><a href="#diary">Diary</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#access">Access</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 메인 화면 -->
+    <section id="home">
+        <h1>メイン画面</h1>
+        <p>ようこそ私のホームページへ！</p>
+    </section>
+
+    <!-- About us -->
+    <section id="about">
+        <h2>About us</h2>
+        <p>ここに仕事の内容などを簡単に書きます（あとで編集可能）。</p>
+    </section>
+
+    <!-- Diary -->
+    <section id="diary">
+        <h2>Diary</h2>
+        <p>9/1：チイカワシューティングゲームを作成しました。</p>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery">
+        <h2>Gallery</h2>
+        <!-- 슈팅게임 iframe으로 삽입 -->
+        <iframe src="gallery/shooting_game.html" width="800" height="600" style="border:none;"></iframe>
+    </section>
+
+    <!-- Access -->
+    <section id="access">
+        <h2>Access</h2>
+        <p>〒542-0081 大阪府大阪市中央区南船場4丁目4番21号 TODA BUILDING 心斎橋 12F</p>
+        <p>TEL：03-5296-9566</p>
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3280.000000!2d135.000000!3d34.666667!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e6b000000001%3A0x1234567890abcdef!2z44CSNTQyLTAwODEg5paw5a6_6KeG5paw5a6_5aSn6Ziy5biC5a2m5ZyS55S677yR5LiB55uu77yR!5e0!3m2!1sja!2sjp!4v1693555000000" 
+            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

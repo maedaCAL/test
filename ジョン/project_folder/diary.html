@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Diary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Baloo 2', cursive;
+            background-color: #fff0f5;
+        }
+
+        header {
+            background-color: #ffe4e1;
+            padding: 15px 40px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .menu {
+            list-style: none;
+            display: flex;
+            justify-content: flex-start;
+            gap: 60px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .menu li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .menu li a:hover {
+            color: #ff69b4;
+            transform: scale(1.1);
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        main h1 {
+            font-size: 2.5em;
+            color: #ff69b4;
+            margin-bottom: 40px;
+        }
+
+        .diary-card {
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 30px 40px;
+            max-width: 800px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+            text-align: left;
+            background-image: linear-gradient(135deg, #fff0f5 25%, #ffe4e1 25%, #ffe4e1 50%, #fff0f5 50%, #fff0f5 75%, #ffe4e1 75%, #ffe4e1 100%);
+            background-size: 40px 40px;
+            margin-bottom: 20px;
+        }
+
+        .diary-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .diary-card p {
+            font-size: 1em;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .diary-card .date {
+            font-weight: bold;
+            color: #ff69b4;
+            margin-right: 5px;
+        }
+
+        .card-actions {
+            margin-top: 10px;
+            text-align: right;
+        }
+
+        .card-actions button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-left: 5px;
+            transition: transform 0.2s;
+        }
+
+        .card-actions button:hover {
+            transform: scale(1.2);
+        }
+
+        #new-entry {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #fff8f8;
+            border-radius: 20px;
+            padding: 20px 30px;
+            max-width: 800px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        #new-entry textarea {
+            width: 100%;
+            height: 80px;
+            border-radius: 10px;
+            border: 1px solid #ffb6c1;
+            padding: 10px;
+            font-family: 'Baloo 2', cursive;
+            font-size: 1em;
+            resize: vertical;
+            margin-bottom: 10px;
+        }
+
+        #new-entry button {
+            background-color: #ff69b4;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1em;
+            transition: transform 0.2s;
+        }
+
+        #new-entry button:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 600px) {
+            .menu { gap: 25px; }
+            main h1 { font-size: 2em; }
+            .diary-card, #new-entry { padding: 20px; }
+            .diary-card p, #new-entry textarea { font-size: 0.95em; }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <nav>
+        <ul class="menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About us</a></li>
+            <li><a href="diary.html">Diary</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="access.html">Access</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <h1>Diary</h1>
+
+    <div id="new-entry">
+        <textarea id="entry-text" placeholder="今日の記録を書いてみよう…"></textarea>
+        <button id="add-entry">投稿</button>
+    </div>
+</main>
+
+<script>
+const addBtn = document.getElementById('add-entry');
+const entryText = document.getElementById('entry-text');
+const main = document.querySelector('main');
+
+function saveToLocalStorage() {
+    const cards = document.querySelectorAll('.diary-card');
+    const data = [];
+    cards.forEach(card => {
+        const p = card.querySelector('p');
+        const date = p.querySelector('.date').textContent;
+        const text = p.textContent.split('：')[1];
+        data.push({date, text});
+    });
+    localStorage.setItem('diaryCards', JSON.stringify(data));
+}
+
+function loadFromLocalStorage() {
+    const data = JSON.parse(localStorage.getItem('diaryCards') || '[]');
+    data.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'diary-card';
+        card.innerHTML = `
+            <p><span class="date">${item.date}</span>：${item.text}</p>
+            <div class="card-actions">
+                <button class="edit-btn">✏️</button>
+                <button class="delete-btn">🗑️</button>
+            </div>
+        `;
+        main.insertBefore(card, document.querySelector('#new-entry').nextSibling);
+        addCardActions(card);
+    });
+}
+
+function addCardActions(card) {
+    const editBtn = card.querySelector('.edit-btn');
+    const deleteBtn = card.querySelector('.delete-btn');
+    const p = card.querySelector('p');
+    const dateSpan = p.querySelector('.date');
+
+    deleteBtn.addEventListener('click', () => {
+        card.remove();
+        saveToLocalStorage();
+    });
+
+    editBtn.addEventListener('click', () => {
+        if(editBtn.textContent === '✏️') {
+            const currentText = p.textContent.split('：')[1];
+            const textarea = document.createElement('textarea');
+            textarea.value = currentText;
+            textarea.style.width = '100%';
+            textarea.style.height = '60px';
+            textarea.style.fontFamily = "'Baloo 2', cursive";
+            textarea.style.fontSize = "1em";
+            card.replaceChild(textarea, p);
+            editBtn.textContent = '💾';
+        } else {
+            const textarea = card.querySelector('textarea');
+            if(textarea) {
+                p.innerHTML = `${dateSpan.outerHTML}：${textarea.value}`;
+                card.replaceChild(p, textarea);
+                editBtn.textContent = '✏️';
+                saveToLocalStorage();
+                addCardActions(card);
+            }
+        }
+    });
+}
+
+addBtn.addEventListener('click', () => {
+    const text = entryText.value.trim();
+    if(text === "") return;
+
+    const today = new Date();
+    const weekDays = ["日曜日","月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"];
+    const dateStr = `${today.getMonth()+1}/${today.getDate()}(${weekDays[today.getDay()]})`;
+
+    const card = document.createElement('div');
+    card.className = 'diary-card';
+    card.innerHTML = `
+        <p><span class="date">${dateStr}</span>：${text}</p>
+        <div class="card-actions">
+            <button class="edit-btn">✏️</button>
+            <button class="delete-btn">🗑️</button>
+        </div>
+    `;
+
+    main.insertBefore(card, document.querySelector('#new-entry').nextSibling);
+    entryText.value = "";
+    addCardActions(card);
+    saveToLocalStorage();
+});
+
+loadFromLocalStorage();
+</script>
+</body>
+</html>
