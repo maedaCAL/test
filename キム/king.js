@@ -317,8 +317,8 @@ characters.forEach(char => {
 adventureButton.addEventListener("click", () => {
   selectScreen.classList.add("hidden");
   instructions = [
-    `あなたが選んだキャラクターは「${selectedCharacter}」です。<br>＜ー　、　ー＞キーで移動、スペースキーで攻撃！`,
-    "敵が上から降ってきます。撃ち落としてポイントを稼ごう！",
+    `あなたが選んだキャラクターは「${selectedCharacter}」です。<br>＜ー　、　ー＞キーで移動、スペースキーで攻撃！<br>侵略する敵を倒して平和を守れ！`,
+    "敵が上から降ってきます。撃ち落としてポイントを稼ごう！<br>ステージを進むにつれて敵のスピードが速くなります。ご注意ください。",
     "「次へ」を押すとゲームが始まります！"
   ];
   instructionIndex = 0;
