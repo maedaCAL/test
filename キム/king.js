@@ -290,6 +290,7 @@ const instructionText = document.getElementById("instruction-text");
 const nextInstructionButton = document.getElementById("next-instruction-button");
 const continueScreen = document.getElementById("continue-screen");
 const continueButton = document.getElementById("continue-button");
+const backButton = document.getElementById("back-button");
 
 let selectedCharacter = null;
 let instructions = [];
@@ -340,6 +341,24 @@ nextInstructionButton.addEventListener("click", () => {
 function showInstruction() {
   instructionText.innerHTML = instructions[instructionIndex];
 }
+
+// 戻るボタン
+backButton.addEventListener("click", () => {
+  if (!battleScreen.classList.contains("hidden")) {
+    battleScreen.classList.add("hidden");
+    selectScreen.classList.remove("hidden");
+    gameEnded = true;
+  } else if (!instructionScreen.classList.contains("hidden")) {
+    instructionScreen.classList.add("hidden");
+    selectScreen.classList.remove("hidden");
+  } else if (!selectScreen.classList.contains("hidden")) {
+    selectScreen.classList.add("hidden");
+    startScreen.classList.remove("hidden");
+    selectedCharacter = null;
+    adventureButton.disabled = true;
+    characters.forEach(c => c.classList.remove("selected"));
+  }
+});
 
 // コンティニュー後、最初の画面に戻す
 continueButton.addEventListener("click", () => {
