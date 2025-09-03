@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Access</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Diary 페이지처럼 메뉴 폰트 적용 -->
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: inherit; /* 본문은 기존 그대로 */
+            background-color: #fff0f5; /* 기존 배경색 유지 */
+        }
+
+        /* 메뉴만 Diary처럼 Baloo 2 폰트 적용 */
+        .menu a {
+            font-family: 'Baloo 2', cursive;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .menu a:hover {
+            color: #ff69b4;
+            transform: scale(1.1);
+        }
+
+        .sns-links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .sns-links a {
+            font-size: 2rem;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+
+        .sns-links a:hover {
+            opacity: 0.7;
+        }
+
+        /* 밝고 연한 핑크 말풍선 */
+        .info-bubble {
+            display: inline-block;
+            background-color: #ffe8f0; /* 배경보다 밝은 연핑크 */
+            padding: 15px 20px;
+            border-radius: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin: 20px 0;
+            font-size: 1em;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        /* 말풍선 꼬리 */
+        .info-bubble::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 30px;
+            border-width: 10px;
+            border-style: solid;
+            border-color: #ffe8f0 transparent transparent transparent;
+        }
+
+        /* iframe 지도 크기 조정 */
+        iframe {
+            width: 100%;
+            max-width: 600px;
+            height: 450px;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About us</a></li>
+                <li><a href="diary.html">Diary</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="access.html">Access</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Access</h2>
+
+        <!-- 말풍선 박스 안에 주소와 전화번호 -->
+        <div class="info-bubble">
+            <p>〒542-0081 大阪府大阪市中央区南船場4丁目4番21号 TODA BUILDING 心斎橋 12F</p>
+            <p>TEL：03-5296-9566</p>
+        </div>
+
+        <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3281.1609099957686!2d135.49975522133047!3d34.675888135478864!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e7bbe414ac4d%3A0xa346d669d5739884!2zVE9EQSBCVUlMRElORyDlv4Pmlo7mqYs!5e0!3m2!1sja!2sjp!4v1756787777308!5m2!1sja!2sjp" 
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+        <!-- SNS 아이콘 영역 -->
+        <div class="sns-links" style="margin-top:50px;">
+            <a href="https://www.instagram.com/chiikawa_kouhou/" target="_blank" title="Instagram">📸</a>
+            <a href="https://x.com/chiikawa_kouhou" target="_blank" title="Twitter">🐦</a>
+            <a href="https://chiikawamarket.jp/" target="_blank" title="Official Shop">🛒</a>
+        </div>
+    </main>
+</body>
+</html>
