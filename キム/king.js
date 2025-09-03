@@ -627,6 +627,8 @@
     const continueScreen = document.getElementById("continue-screen");
     const continueButton = document.getElementById("continue-button");
     const backButton = document.getElementById("back-button");
+    const enemyImage = new Image();
+    enemyImage.src = "meteo.png";  // ここは隕石画像のパスに合わせて
 
     // グローバル変数
     let selectedCharacter = null;
@@ -725,15 +727,15 @@
       // キャラに応じてplayerのパラメータ設定
       let playerColor = "blue";
       let playerSpeed = 5;
-      let playerWidth = 40;
-      let playerHeight = 40;
+      let playerWidth = 60;
+      let playerHeight = 60;
       let playerImage = null;
 
       if (selectedCharacter === "戦士") {
-        playerColor = "red";
-        playerSpeed = 4;
-        playerImage = new Image();
-        playerImage.src = "beastman.png";
+  playerColor = "red";
+  playerSpeed = 4;
+  playerImage = new Image();
+  playerImage.src = "beastman.png"; // 画像パスを適切に
       } else if (selectedCharacter === "魔法使い") {
         playerColor = "purple";
         playerSpeed = 6;
@@ -810,8 +812,12 @@
       if (player.x + player.width > canvas.width) player.x = canvas.width - player.width;
 
       // プレイヤー描画
-      ctx.fillStyle = player.color;
-      ctx.fillRect(player.x, player.y, player.width, player.height);
+      if (player.image && player.image.complete) {
+        ctx.drawImage(player.image, player.x, player.y, player.width, player.height);
+      } else {
+        ctx.fillStyle = player.color;
+        ctx.fillRect(player.x, player.y, player.width, player.height);
+      }
 
       // 弾処理
       bullets.forEach((b, i) => {
@@ -821,37 +827,60 @@
         if (b.y + b.height < 0) bullets.splice(i, 1);
       });
 
-      // 敵生成
+
+// --- 敵生成 ---
       if (!lastEnemySpawn) lastEnemySpawn = timestamp;
       if (timestamp - lastEnemySpawn > enemySpawnInterval) {
         enemies.push({
-          x: Math.random() * (canvas.width - 30),
-          y: -30,
-          width: 30,
-          height: 30,
-          color: "red",
-          speed: 2 + stageNumber * 0.5
+          x: Math.random() * (canvas.width - 60),  // 画像サイズに合わせて調整
+          y: -60,
+          width: 60,
+          height: 60,
+          speed: 2 + stageNumber * 0.5,
+          image: enemyImage
         });
         lastEnemySpawn = timestamp;
       }
 
-      // 敵処理
+// --- 敵生成 ---
+      if (!lastEnemySpawn) lastEnemySpawn = timestamp;
+      if (timestamp - lastEnemySpawn > enemySpawnInterval) {
+        enemies.push({
+          x: Math.random() * (canvas.width - 60),  // 画像サイズに合わせて調整
+          y: -60,
+          width: 60,
+          height: 60,
+          speed: 2 + stageNumber * 0.5,
+          image: enemyImage   // ここで読み込み済みの画像をセット
+        });
+        lastEnemySpawn = timestamp;
+      }
+
+// --- 敵処理 ---
       enemies.forEach((e, ei) => {
         e.y += e.speed;
-        ctx.fillStyle = e.color;
-        ctx.fillRect(e.x, e.y, e.width, e.height);
 
+  // 画像が読み込まれていたら描画
+        if (e.image && e.image.complete) {
+          ctx.drawImage(e.image, e.x, e.y, e.width, e.height);
+        } else {
+    // 画像がなければ白い四角で代替描画（ここは任意）
+          ctx.fillStyle = "white";
+          ctx.fillRect(e.x, e.y, e.width, e.height);
+        }
+
+  // 敵が画面外に行ったらHPを減らす
         if (e.y > canvas.height) {
           enemies.splice(ei, 1);
           player.hp--;
-          if (player.hp <= 0) {
+        if (player.hp <= 0) {
             gameEnded = true;
             showEndMessage("YOU LOSE");
             return;
           }
-          return;
         }
 
+  // 弾と敵の当たり判定
         bullets.forEach((b, bi) => {
           if (
             b.x < e.x + e.width &&
@@ -864,7 +893,7 @@
             enemiesDefeated++;
             points += 100;
 
-            if (enemiesDefeated >= enemiesToClear) {
+          if (enemiesDefeated >= enemiesToClear) {
               stageNumber++;
               enemiesToClear += 5;
               enemiesDefeated = 0;
@@ -879,7 +908,6 @@
           }
         });
       });
-
       // HUD
       ctx.fillStyle = "white";
       ctx.font = "20px Arial";
