@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>カスタマーサポート</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Baloo 2', cursive;
+            margin: 0;
+            padding: 0;
+            background-color: #fff7f9;
+            color: #333;
+            text-align: center;
+        }
+
+        header {
+            background-color: #ffb6c1;
+            padding: 10px;
+            position: relative; /* 뒤로가기 버튼 위치 조정용 */
+        }
+
+        header ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        header ul li {
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+        }
+
+        /* 뒤로가기 버튼 스타일 */
+        .back-button {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            color: white;
+            text-decoration: none;
+            background-color: #ff69b4;
+            padding: 5px 10px;
+            border-radius: 15px;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #ff1493;
+        }
+
+        main.customer {
+            padding: 40px 20px;
+        }
+
+        main.customer h1 {
+            font-size: 2.5em;
+            color: #ff69b4;
+            margin-bottom: 20px;
+        }
+
+        .support-bubble {
+            display: inline-block;
+            background: #fff;
+            border: 2px solid #ffb6c1;
+            border-radius: 30px;
+            padding: 30px 20px;
+            box-shadow: 3px 3px 8px rgba(255,182,193,0.4);
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .support-bubble img {
+            width: 80px;
+            height: auto;  /* 원래 이미지 비율 유지 */
+            margin-bottom: 15px;
+        }
+
+        .support-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .support-buttons button {
+            background-color: #ff69b4;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .support-buttons button:hover {
+            background-color: #ff1493;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="back-button">← 戻る</a>
+        <ul>
+            <li>カスタマーサポート</li>
+        </ul>
+    </header>
+
+    <main class="customer">
+        <h1>何かお手伝いできることはございますか？</h1>
+        <div class="support-bubble">
+            <!-- 내가 가진 이미지 전체 표시 -->
+            <img src="images/kawa.png" alt="サポートアイコン">
+            <div class="support-buttons">
+                <button>💬 チャットで相談</button>
+                <button>📞 電話で相談</button>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
