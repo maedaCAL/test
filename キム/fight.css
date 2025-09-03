@@ -1,30 +1,27 @@
 body {
-  background-image: url('space.jpg'); /* 画像のパス */
-  background-size: cover;      /* 画面いっぱいに画像を伸ばす */
-  background-position: center; /* 画像の中心を表示 */
-  background-repeat: no-repeat; /* 画像を繰り返さない */
-  color: rgb(0, 0, 0);
+  background-image: url('space.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #000;
   font-family: Arial, sans-serif;
   text-align: center;
   margin: 0;
   padding: 20px;
 }
-
 .hidden {
   display: none;
 }
-
 .start-screen, .select-screen, #instruction-screen, #continue-screen, .battle-screen {
   max-width: 640px;
-  margin: 0 auto;
+  margin: 20px auto;
   padding: 20px;
-  background-image: url('hoshi52.png'); /* 背景にイラストを設定 */
-  background-size: cover;      /* 画面内に画像をフィット */
+  background-image: url('hoshi52.png');
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 8px;
-  /* 背景画像があるので、背景色は不要なら消すか透明に */
-  background-color: transparent; /* もしくは色を薄くしたいなら rgba で調整もOK */
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .character-list {
@@ -32,7 +29,6 @@ body {
   justify-content: space-around;
   margin: 20px 0;
 }
-
 .character {
   cursor: pointer;
   border: 3px solid transparent;
@@ -40,59 +36,59 @@ body {
   border-radius: 8px;
   transition: border-color 0.3s;
 }
-
 .character.selected {
   border-color: yellow;
 }
-
 .character img {
   width: 200px;
   height: 200px;
   object-fit: contain;
 }
-
 button {
   background-color: #00cfeb;
   border: none;
-  color: rgb(0, 0, 0);
+  color: #000;
   padding: 10px 20px;
   font-size: 16px;
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
-
 button:disabled {
   background-color: #666;
   cursor: not-allowed;
 }
-
 button:hover:not(:disabled) {
   background-color: #666;
 }
-
 canvas {
   display: block;
   margin: 0 auto;
-  background-image: url('BH.jpg'); /* ← ここに画像のパス */
-  background-size: cover; /* キャンバス全体にフィットさせる */
+  background-image: url('BH.jpg');
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   border: 2px solid white;
   border-radius: 8px;
 }
-
-/* 左上のHUDの余白調整 */
-.battle-screen canvas {
-  position: relative;
-}
-
-
 #back-button {
   position: absolute;
   top: 10px;
   left: 10px;
   padding: 5px 10px;
   font-size: 16px;
-  z-index: 100;
- }
+  z-index: 1000; /* 高く設定しました */
+}
+#stage-message {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.8);
+  color: yellow;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  font-weight: bold;
+  z-index: 2000;
+}
