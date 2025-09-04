@@ -649,6 +649,8 @@
     let enemiesToClear;
     let points;
     let gameEnded;
+    let isShowingStageMessage = false;
+    let shakeTime = 0; // ← 追加
 
     // スタート画面 → セレクト画面
     startButton.addEventListener("click", () => {
@@ -671,9 +673,9 @@
     adventureButton.addEventListener("click", () => {
       selectScreen.classList.add("hidden");
       instructions = [
-        `あなたが選んだキャラクターは「${selectedCharacter}」です。<br>← →キーで移動、スペースキーで攻撃！`,
-        "敵が上から降ってきます。撃ち落としてポイントを稼ごう！<br>ステージを進むごとに敵が速くなります！",
-        "「次へ」を押すとゲームが始まります！がんばって！"
+        `<br><br><br><br>冷たい宇宙空間に不思議な黒い渦がある　<br><br>　飲み込まれたら誰一人帰った奴はないと言う・・・　<br><br>　だが希望はある！選んだ仲間「${selectedCharacter}」と共に戦う！<br> <br>← →キーで左右移動、スペースキーで攻撃ができる<br>　<br>侵略者たちを防いで地球を守ってぐださい！！！　<br><br><br><br>`,
+        "<br><br><br><br<br><br><br><br>悪魔の化身か・・・・　地獄の使者か・・・・なくとも・・・<br><br>　隕石の中で体を隠して、襲われるブラックホール軍団！　<br><br>　敵が上から降ってきます。撃ち落としてポイントを稼ごう！<br><br>ステージを進めば進むほど、敵！　<br>　<br><br><br>",
+        "<br> <br>「次へ」を押すとゲームが始まります！がんばって！　<br>　<br>"
       ];
       instructionIndex = 0;
       showInstruction();
@@ -731,17 +733,17 @@
       let playerHeight = 60;
       let playerImage = null;
 
-      if (selectedCharacter === "戦士") {
+      if (selectedCharacter === "獣戦士　ヒョガイ") {
   playerColor = "red";
   playerSpeed = 4;
   playerImage = new Image();
   playerImage.src = "beastman.png"; // 画像パスを適切に
-      } else if (selectedCharacter === "魔法使い") {
+      } else if (selectedCharacter === "魔法使い　マホ") {
         playerColor = "purple";
         playerSpeed = 6;
         playerImage = new Image();
         playerImage.src = "wizard.png";
-      } else if (selectedCharacter === "弓使い") {
+      } else if (selectedCharacter === "弓使い　アユミ") {
         playerColor = "green";
         playerSpeed = 5;
         playerImage = new Image();
@@ -800,8 +802,29 @@
       if (e.code === "ArrowRight") player.moveRight = false;
     }
 
+    // function gameLoop(timestamp) {
+    //   if (gameEnded) return;
+
+    //   if (isShowingStageMessage) {
+    // // メッセージ表示中は何もしないで待つ
+    //     return;
+    //   }
+
     function gameLoop(timestamp) {
-      if (gameEnded) return;
+  if (gameEnded) return;
+  if (isShowingStageMessage) return;
+
+  // 💥 シェイク処理（ここでキャンバスの描画座標をずらす）
+  if (shakeTime > 0) {
+    const dx = (Math.random() - 0.5) * 10;
+    const dy = (Math.random() - 0.5) * 10;
+    ctx.setTransform(1, 0, 0, 1, dx, dy);  // ← 画面を揺らす
+    shakeTime--;
+  } else {
+    ctx.setTransform(1, 0, 0, 1, 0, 0);    // ← 元の位置に戻す
+  }
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -836,25 +859,12 @@
           y: -60,
           width: 60,
           height: 60,
-          speed: 2 + stageNumber * 0.5,
+          speed: 2 + stageNumber * 1.5,
           image: enemyImage
         });
         lastEnemySpawn = timestamp;
       }
 
-// --- 敵生成 ---
-      if (!lastEnemySpawn) lastEnemySpawn = timestamp;
-      if (timestamp - lastEnemySpawn > enemySpawnInterval) {
-        enemies.push({
-          x: Math.random() * (canvas.width - 60),  // 画像サイズに合わせて調整
-          y: -60,
-          width: 60,
-          height: 60,
-          speed: 2 + stageNumber * 0.5,
-          image: enemyImage   // ここで読み込み済みの画像をセット
-        });
-        lastEnemySpawn = timestamp;
-      }
 
 // --- 敵処理 ---
       enemies.forEach((e, ei) => {
@@ -869,10 +879,13 @@
           ctx.fillRect(e.x, e.y, e.width, e.height);
         }
 
-  // 敵が画面外に行ったらHPを減らす
         if (e.y > canvas.height) {
           enemies.splice(ei, 1);
           player.hp--;
+
+          // 💥 シェイクを 20 フレーム分発動
+          shakeTime = 20;
+
         if (player.hp <= 0) {
             gameEnded = true;
             showEndMessage("YOU LOSE");
@@ -893,18 +906,32 @@
             enemiesDefeated++;
             points += 100;
 
-          if (enemiesDefeated >= enemiesToClear) {
-              stageNumber++;
-              enemiesToClear += 5;
-              enemiesDefeated = 0;
-              showStageMessage(`ステージ ${stageNumber} 開始！`);
-              enemies.length = 0;
-              setTimeout(() => {
-                lastEnemySpawn = 0;
-                if (!gameEnded) requestAnimationFrame(gameLoop);
-              }, 2000);
-              return;
-            }
+  //         if (enemiesDefeated >= enemiesToClear) {
+  //             stageNumber++;
+  //             enemiesToClear += 5;
+  //             enemiesDefeated = 0;
+  //             showStageMessage(`ステージ ${stageNumber} 開始！`);
+  //             enemies.length = 0;
+
+  // // ここでgameLoopの再開を3秒遅らせている
+  //             setTimeout(() => {
+  //               lastEnemySpawn = 0;
+  //               if (!gameEnded) requestAnimationFrame(gameLoop);
+  //             }, 3000);
+  //             return;
+  //           }
+
+if (enemiesDefeated >= enemiesToClear) {
+  stageNumber++;
+  enemiesToClear += 5;
+  enemiesDefeated = 0;
+  enemies.length = 0;
+  player.speed += 1.5;
+
+  showStageMessage(`ステージ ${stageNumber} 開始！`);
+
+  return;  // メッセージ表示中はgameLoopを中断
+}
           }
         });
       });
@@ -931,13 +958,29 @@
       continueScreen.classList.remove("hidden");
     }
 
-    function showStageMessage(text) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "yellow";
-      ctx.textAlign = "center";
-      ctx.font = "40px Arial";
-      ctx.fillText(text, canvas.width / 2, canvas.height / 2);
-    }
+    // function showStageMessage(text) {
+    //   ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //   ctx.fillStyle = "yellow";
+    //   ctx.textAlign = "center";
+    //   ctx.font = "40px Arial";
+    //   ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+    // }
+
+function showStageMessage(text) {
+  isShowingStageMessage = true;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "yellow";
+  ctx.textAlign = "center";
+  ctx.font = "40px Arial";
+  ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+
+  setTimeout(() => {
+    isShowingStageMessage = false;
+    lastEnemySpawn = 0;  // 敵出現タイマーリセット
+    if (!gameEnded) requestAnimationFrame(gameLoop);
+  }, 3000);
+}
 
     function resetToStart() {
       battleScreen.classList.add("hidden");
