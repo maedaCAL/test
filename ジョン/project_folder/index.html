@@ -13,7 +13,7 @@
             font-weight: 700;
             color: #ff69b4; /* 한 톤 핑크 */
             text-shadow: 2px 2px 4px rgba(255,182,193,0.5), 
-                         -2px -2px 4px rgba(255,182,193,0.5); /* 입체감 있는 귀여운 그림자 */
+                         -2px -2px 4px rgba(255,182,193,0.5);
             display: inline-block;
             margin-top: 20px;
         }
@@ -33,6 +33,30 @@
                 width: 90%;
             }
         }
+
+        /* 캐릭터 이미지 스타일 */
+        .character-container {
+            position: fixed;
+            right: 0;
+            bottom: 100px;
+            width: 150px;
+            cursor: pointer;
+        }
+
+        .character {
+            width: 100%;
+            transition: transform 0.3s;
+        }
+
+        .peek-animation {
+            animation: peekEffect 0.3s forwards;
+        }
+
+        @keyframes peekEffect {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(-10deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
     </style>
 </head>
 <body>
@@ -46,9 +70,37 @@
         </ul>
     </header>
 
-   <main class="home">
-    <img src="images/kawa.webp" alt="ホーム画像" style="width: 60%; max-width: 400px; border-radius: 15px;">
-    <h1>ちいかわ株式会社</h1>
-</main>
+    <main class="home">
+        <img src="images/kawa.webp" alt="ホーム画像" style="width: 60%; max-width: 400px; border-radius: 15px;">
+        <h1>ちいかわ株式会社</h1>
+    </main>
+
+    <!-- 캐릭터 이미지 -->
+    <div class="character-container">
+        <img src="images/goburin.webp" alt="キャラクター" class="character" id="character">
+    </div>
+
+    <script>
+        const character = document.getElementById("character");
+
+        // 마우스 오버 시 이미지 변경 + 애니메이션
+        character.addEventListener("mouseenter", () => {
+            character.src = "images/chiikawa.png";
+            character.classList.add("peek-animation");
+        });
+
+        character.addEventListener("animationend", () => {
+            character.classList.remove("peek-animation");
+        });
+
+        character.addEventListener("mouseleave", () => {
+            character.src = "images/goburin.webp";
+        });
+
+        // 클릭 시 고객지원 페이지로 이동
+        character.addEventListener("click", () => {
+            window.location.href = "customer.html";
+        });
+    </script>
 </body>
 </html>
