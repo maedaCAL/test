@@ -24,6 +24,14 @@ body {
   background-color: rgba(255, 255, 255, 0.8);
 }
 
+.start-screen img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto; /* 画像を中央に */
+}
+
+
 .character-list {
   display: flex;
   justify-content: space-around;
@@ -64,7 +72,7 @@ button:hover:not(:disabled) {
 canvas {
   display: block;
   margin: 0 auto;
-  background-image: url('BH.jpg');
+  background-image: url('BH.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -91,4 +99,14 @@ canvas {
   font-size: 40px;
   font-weight: bold;
   z-index: 2000;
+}
+
+#start-button {
+  margin-top: 20px; /* 画像とボタンの間にスペース */
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #00ccff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
