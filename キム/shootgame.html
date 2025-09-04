@@ -2,34 +2,34 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <title>コズミック　デビル</title>
+  <title>コズミック デビル</title>
   <link rel="stylesheet" href="fight.css" />
 </head>
 <body>
+  <button id="back-button">← 戻る</button>
+
   <!-- スタート画面 -->
   <div class="start-screen">
-    <h1>冒険の始まり</h1>
+    <h1>宇宙戦争：倒せ！ブラックホール軍団</h1>
+    <img src="devil.jpg" alt="悪魔" />
     <button id="start-button">スタート</button>
   </div>
 
-  <!-- キャラクターセレクト画面 -->
+  <!-- キャラクター選択画面 -->
   <div class="select-screen hidden">
-    <h2>キャラクターを選んでください</h2>
+    <h2>一緒に戦う仲間を選んでください！</h2>
     <div class="character-list">
-      <div class="character" data-character="戦士">
-        <img src="beastman.png" alt="戦士" />
-        <p>戦士</p>
+      <div class="character" data-character="獣戦士　ヒョガイ" data-color="blue">
+        <img src="beastman.png" alt="獣戦士　ヒョガイ" /><p>獣戦士　ヒョガイ</p>
       </div>
-      <div class="character" data-character="魔法使い">
-        <img src="wizard.png" alt="魔法使い" />
-        <p>魔法使い</p>
+      <div class="character" data-character="魔法使い　マホ" data-color="purple">
+        <img src="wizard.png" alt="魔法使い　マホ" /><p>魔法使い　マホ</p>
       </div>
-      <div class="character" data-character="弓使い">
-        <img src="archer.png" alt="弓使い" />
-        <p>弓使い</p>
+      <div class="character" data-character="弓使い　アユミ" data-color="green">
+        <img src="archer.png" alt="弓使い　アユミ" /><p>弓使い　アユミ</p>
       </div>
     </div>
-    <button id="adventure-button" disabled>冒険スタート！</button>
+    <button id="adventure-button" disabled>宇宙を救う時！</button>
   </div>
 
   <!-- 説明画面 -->
@@ -38,19 +38,21 @@
     <button id="next-instruction-button">次へ</button>
   </div>
 
-  <!-- コンティニュー画面 -->
+  <!-- ゲームオーバー（コンティニュー）画面 -->
   <div id="continue-screen" class="hidden">
-    <h2>ゲームオーバー！</h2>
-    <p>続けますか？</p>
+    <h2>ゲームオーバー！ 空間の歪みに巻き込まれた・・・</h2>
+    <p>リスタートして、続けて戦いますか？</p>
     <button id="continue-button">コンティニュー</button>
   </div>
 
-  <!-- 戦闘画面 -->
+  <!-- バトル画面 -->
   <div class="battle-screen hidden">
     <canvas id="gameCanvas" width="600" height="400"></canvas>
-    <p>＜ー　、　ー＞キーで移動、スペースキーで攻撃！</p>
-  </div>
+    <p>＜ー 、 ー＞キーで左右移動、スペースキーで攻撃！地球を求めれ！！！</p>
+    <iframe width="500"height="100"src="https://www.youtube.com/embed/H_rPAgpuRg4"title="Japan"></iframe>
 
+  </div>
+  
   <script src="king.js"></script>
 </body>
 </html>

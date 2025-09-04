@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>About - 간장 포트폴리오</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/script.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=M+PLUS+Rounded+1c:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+</head>
+<body>
+  <!--상단 네비게이션 -->
+<nav class="top-nav">
+  <a href="index.html" class="logo">
+    <img src="images/logo.png" alt="홈으로" />
+  </a>
+  <ul>
+    <li><a href="index.html">Top</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="news.html">News</a></li>
+    <li><a href="project.html">Project</a></li>
+    <li><a href="access.html">Address</a></li>
+  </ul>
+  <button class="menu-toggle">☰</button>
+</nav>
+
+<!-- 오버레이 -->
+<div id="overlay"></div>
+
+<!-- 사이드 메뉴 -->
+<aside class="side-menu" id="sideMenu">
+    <ul>
+      <li><a href="index.html" data-ja="トップ" data-en="Top">トップ</a></li>
+      <li>
+        <a href="about.html" data-ja="アバウト" data-en="About">アバウト</a>
+        <ul class="submenu">
+          <li><a href="#about" data-ja="自己紹介" data-en="About Me">自己紹介</a></li>
+          <li><a href="#skills" data-ja="スキル" data-en="Skills">スキル</a></li>
+          <li><a href="#experience" data-ja="経歴" data-en="Experience">経歴</a></li>
+          <li><a href="#vision" data-ja="ビジョン" data-en="Vision">ビジョン</a></li>
+          <li><a href="#timeline" data-ja="タイムライン" data-en="Timeline">タイムライン</a></li>
+          <li><a href="#hobbies" data-ja="趣味" data-en="Hobbies">趣味</a></li>
+        </ul>
+      </li>
+      <li><a href="news.html" data-ja="ニュース" data-en="News">ニュース</a></li>
+      <li><a href="project.html" data-ja="プロジェクト" data-en="Projects">プロジェクト</a></li>
+      <li><a href="access.html" data-ja="アクセス" data-en="Address">アクセス</a></li>
+    </ul>
+  </aside>
+
+
+  <!-- About Section -->
+  <section id="about" style="padding:100px 20px; max-width:800px; margin:0 auto; text-align:left;">
+    <h2 style="text-align:center; margin-bottom:30px; color:#7BA05B;">ABOUT</h2>
+
+    <!-- 자기소개 -->
+    <h3 id="intro" data-ja="自己紹介" data-en="About Me">自己紹介</h3>
+    <p data-ja="こんにちは、いつも挑戦する開発者、ジャン・ジユンです。" 
+       data-en="Hello, I’m Jang Jiyun, a developer who always takes on challenges.">
+      こんにちは、いつも挑戦する開発者、ジャン・ジユンです。
+    </p>
+
+    <!-- 스킬 -->
+    <h3 id="skills">スキル</h3>
+    <ul>
+      <li>Java / Spring Framework</li>
+      <li>JavaScript / HTML / CSS</li>
+      <li>SQL (MySQL / PostgreSQL)</li>
+      <li>日本語 (JLPT N2)</li>
+    </ul>
+
+    <!-- 경력 -->
+    <h3 id="experience" data-ja="経歴" data-en="Experience">経歴</h3>
+    <ul>
+      <li data-ja="地籍不動産学科" data-en="Department of Cadastral Real Estate">地籍不動産学科</li>
+      <li data-ja="2025年6月〜　キャル株式会社 IT研修" data-en="From June 2025 – CAL Corporation IT Training">2025年6月〜　キャル株式会社 IT研修</li>
+    </ul>
+
+    <!-- 비전 -->
+    <h3 id="vision" data-ja="ビジョン" data-en="Vision">ビジョン</h3>
+    <p data-ja="挑戦し続け、成長を止めないエンジニアを目指しています。3年間で独力での開発を実現し、将来は後輩を育てる立場になりたいです。" 
+       data-en="I aim to be an engineer who keeps challenging and never stops growing. Within 3 years, I want to achieve independent development and eventually mentor juniors.">
+       挑戦し続け、成長を止めないエンジニアを目指しています。3年間で独力での開発を実現し、将来は後輩を育てる立場になりたいです。
+    </p>
+  </section>
+
+   <!-- 타임라인 -->
+  <section id="timeline">
+    <h3 data-ja="タイムライン" data-en="Timeline">タイムライン</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">2019</div>
+        <div class="timeline-content" data-ja="地籍不動産学科 入学" data-en="Entered Department of Cadastral Real Estate">地籍不動産学科 入学</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2023</div>
+        <div class="timeline-content" data-ja="大学 卒業" data-en="University Graduation">大学 卒業</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2024</div>
+        <div class="timeline-content" data-ja="IT教育機関で Java / Web 開発学習" data-en="Studied Java / Web development at IT institute">IT教育機関で Java / Web 開発学習</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2025年6月〜</div>
+        <div class="timeline-content" data-ja="キャル株式会社 IT研修 参加" data-en="Joined CAL Corporation IT Training">キャル株式会社 IT研修 参加</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 취미 -->
+  <section id="hobbies" style="max-width:800px; margin:50px auto; text-align:center;">
+    <h3 data-ja="趣味" data-en="Hobbies">趣味</h3>
+    <div class="hobby-slider">
+      <div class="slides">
+        <a href="https://www.hulu.jp/anaban" target="_blank">
+          <img src="images/dorama.jpg" alt="드라마 감상">
+        </a>
+        <a href="https://www.kamigatarakugo.jp/" target="_blank">
+          <img src="images/rakugo.jpg" alt="라쿠ゴ">
+        </a>
+        <a href="https://www.ssglanders.com/main" target="_blank">
+          <img src="images/landers.jpg" alt="야구 관람">
+        </a>
+      </div>
+      <button class="prev">◀</button>
+      <button class="next">▶</button>
+    </div>
+  </section>
+
+  <!-- 번역 버튼 -->
+  <img id="translateBtn" src="images/ej.png" alt="Translate" class="translate-btn">
+
+  <!-- 하단 깃허브 링크 -->
+  <a href="https://github.com/간장님GitHubID" target="_blank" class="github-link">
+    <img src="images/github.png" alt="GitHub" />
+  </a>
+  <!-- 하단 인스타그램 링크 -->
+  <a href="https://www.instagram.com/__jiyun__1117" target="_blank" class="instagram-link">
+    <img src="images/instagram.png" alt="Instagram" />
+  </a>
+
+    <!-- 음악 -->
+<div class="music-player">
+  <button id="musicBtn">
+    <i class="fa-solid fa-pause"></i> <!-- 시작은 자동재생 중이라 정지 아이콘 -->
+  </button>
+  <audio id="bgm" autoplay loop muted>
+    <source src="images/music.mp3" type="audio/mpeg">
+    브라우저가 오디오를 지원하지 않습니다.
+  </audio>
+</div>
+
+
+</body>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>© 2025 ジャン・ジユン | Portfolio Website</p>
+</footer>
+
+</html>
