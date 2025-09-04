@@ -1,238 +1,77 @@
-<canvas id="gameCanvas" width="400" height="600" style="background:#000"></canvas>
-
-<script>
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
-
-// 플레이어 설정
-let player, bullets, enemies, frame, enemyFrame, gameOver, keys, score, lastLevel, levelUpTimer;
-let started = false; // 시작 플래그: 스페이스로 시작
-
-function initState() {
-  player = {
-    x: canvas.width / 2,
-    y: canvas.height - 80,
-    r: 6,
-    speed: 4,
-    slowSpeed: 2
-  };
-  bullets = [];
-  enemies = [];
-  frame = 0;
-  enemyFrame = 0;
-  gameOver = false;
-  keys = {};
-  score = 0; // 점수 초기화
-  lastLevel = 1; // 현재 레벨 추적 (레벨업 감지용)
-  levelUpTimer = 0; // 레벨업 팝업 표시 타이머 (프레임)
-}
-initState();
-
-// 키 입력 상태 저장
-window.addEventListener("keydown", e => {
-  const controlKeys = ["KeyW","KeyA","KeyS","KeyD","Space","ShiftLeft","KeyR","Enter"];
-  if (controlKeys.includes(e.code)) e.preventDefault();
-  if (!started && e.code === "Space") { started = true; return; }
-
-  if (gameOver && (e.code === "KeyR" || e.code === "Enter")) {
-    resetGame();
-    return;
-  }
-  keys[e.code] = true;
-});
-
-window.addEventListener("keyup", e => {
-  const controlKeys = ["KeyW","KeyA","KeyS","KeyD","Space","ShiftLeft"];
-  if (controlKeys.includes(e.code)) e.preventDefault();
-  keys[e.code] = false;
-});
-
-function resetGame() {
-  initState();
-}
-
-// 레벨(난이도) 계산: 점수 20마다 +1
-function getLevel() {
-  return 1 + Math.floor(score / 20);
-}
-
-function spawnEnemy() {
-  const minHp = Math.min(1 + Math.floor(score / 20), 4);
-  const hpValue = minHp + Math.floor(Math.random() * (5 - minHp)); // minHp ~ 4 사이 랜덤
-
-  enemies.push({
-    x: Math.random() * (canvas.width - 20) + 10,
-    y: -10,
-    r: 8 + Math.random() * 12,
-    hp: hpValue,
-    dy: 1 + hpValue // 체력에 비례한 속도
-  });
-}
-
-function checkCollision(a, b) {
-  const dx = a.x - b.x;
-  const dy = a.y - b.y;
-  return Math.hypot(dx, dy) < a.r + b.r;
-}
-
-function update() {
-  if (!started || gameOver) return;
-
-  // 레벨업 팝업 타이머 감소
-  if (levelUpTimer > 0) levelUpTimer--;
-
-  const moveSpeed = keys["ShiftLeft"] ? player.slowSpeed : player.speed;
-
-  // WASD 이동
-  if (keys["KeyA"] && player.x - moveSpeed > 0) player.x -= moveSpeed;
-  if (keys["KeyD"] && player.x + moveSpeed < canvas.width) player.x += moveSpeed;
-  if (keys["KeyW"] && player.y - moveSpeed > 0) player.y -= moveSpeed;
-  if (keys["KeyS"] && player.y + moveSpeed < canvas.height) player.y += moveSpeed;
-
-  // 총알 발사 (Space 연사, 최소 10프레임 간격, 레벨 2마다 0.5씩 빨라짐)
-  frame++;
-  const level = getLevel();
-  const fireInterval = Math.max(10, 15 - Math.floor((level - 1) / 2) * 0.5);
-  if (keys["Space"] && frame % Math.floor(fireInterval) === 0) {
-    bullets.push({ x: player.x, y: player.y - 10, r: 3, dy: -8 });
-  }
-
-  // 총알 이동 & 제거
-  bullets.forEach(b => b.y += b.dy);
-  bullets = bullets.filter(b => b.y > -10);
-
-  // 적 생성 (레벨↑ → 스폰 간격 단축 + 동시 스폰 수 증가)
-enemyFrame++;
-const levelNow = getLevel();
-const baseSpawn = 60;
-const spawnInterval = Math.max(20, Math.floor(baseSpawn - levelNow * 8));
-const spawnCount = 1 + Math.floor(levelNow / 2); // Lv1-2:1, Lv3-4:2, Lv5-6:3 ...
-const maxOnScreen = 25; // 화면 내 적 최대 수 제한(성능 보호)
-if (enemyFrame % spawnInterval === 0) {
-  const canSpawn = Math.max(0, maxOnScreen - enemies.length);
-  for (let k = 0; k < Math.min(spawnCount, canSpawn); k++) {
-    spawnEnemy();
-  }
-}
-
-
-  // 적 이동
-  enemies.forEach(e => e.y += e.dy);
-
-  // 충돌 체크 (플레이어 vs 적)
-  for (const e of enemies) {
-    if (checkCollision(player, e)) {
-      gameOver = true;
-      break;
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #001830; /* 남색 배경 */
+      color: white;
+      font-family: Consolas, monospace;
     }
-  }
-
-  // 충돌 체크 (총알 vs 적)
-  for (let i = enemies.length - 1; i >= 0; i--) {
-    const e = enemies[i];
-    for (let j = bullets.length - 1; j >= 0; j--) {
-      const b = bullets[j];
-      if (checkCollision(e, b)) {
-        bullets.splice(j, 1);
-        e.hp -= 1;
-        e.dy = 1 + e.hp + getLevel() * 0.3; // HP와 레벨 기반 속도 갱신
-        if (e.hp <= 0) {
-          enemies.splice(i, 1);
-          score += 1;
-          // 레벨업 체크: 점수 증가 직후
-          const newLevel = getLevel();
-          if (newLevel > lastLevel) {
-            lastLevel = newLevel;
-            levelUpTimer = 90; // 약 1.5초 (60fps 기준)
-          }
-        }
-        break;
-      }
+    .container {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
     }
-  }
+    .panel {
+      width: 180px;
+      padding: 10px;
+      background: rgba(0, 24, 48, 0.9);
+      border: 2px solid #0a3b4a;
+      border-radius: 8px;
+    }
+    #gameCanvas {
+      background: black;
+      display: block;
+    }
+    h2 {
+      margin-top: 0;
+      font-size: 18px;
+      border-bottom: 1px solid #0a3b4a;
+      padding-bottom: 4px;
+    }
+    ul {
+      padding-left: 16px;
+      margin: 4px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 왼쪽 패널 -->
+    <div class="panel">
+      <h2>Status</h2>
+      <div id="hud">
+        Score: 0<br>
+        Lives: 3<br>
+        Bombs: 3<br>
+        Power: 1<br>
+        Level: 1
+      </div>
+    </div>
 
-  // 화면 밖 적 제거
-  enemies = enemies.filter(e => e.y < canvas.height + 20);
-}
+    <!-- 게임 화면 -->
+    <canvas id="gameCanvas" width="400" height="600"></canvas>
 
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+    <!-- 오른쪽 패널 -->
+    <div class="panel">
+      <h2>Controls</h2>
+      <ul>
+        <li>Move: WASD</li>
+        <li>Shoot: Space</li>
+        <li>Bomb: X</li>
+        <li>Slow: Shift</li>
+        <li>Restart: R/Enter</li>
+      </ul>
+    </div>
+  </div>
 
-  // HUD 표시
-  ctx.fillStyle = "white";
-  ctx.font = "16px Arial";
-  ctx.textAlign = "left";
-  const level = getLevel();
-  const fireInterval = Math.max(10, 15 - Math.floor((level - 1) / 2) * 0.5);
-  ctx.fillText(`Score: ${score}` , 10, 24);
-  ctx.fillText(`Level: ${level}` , 10, 44);
-  ctx.fillText(`Fire interval: ${fireInterval}f`, 10, 64);
-
-  // 플레이어
-  ctx.fillStyle = "cyan";
-  ctx.beginPath();
-  ctx.arc(player.x, player.y, player.r, 0, Math.PI * 2);
-  ctx.fill();
-
-  // 총알
-  ctx.fillStyle = "lime";
-  for (const b of bullets) {
-    ctx.beginPath();
-    ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
-  // 적 (체력에 따라 색 변경)
-  for (const e of enemies) {
-    if (e.hp === 4) ctx.fillStyle = "yellow";
-    else if (e.hp === 3) ctx.fillStyle = "orange";
-    else if (e.hp === 2) ctx.fillStyle = "red";
-    else ctx.fillStyle = "darkred";
-
-    ctx.beginPath();
-    ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
-  // 게임오버 표시
-  if (gameOver) {
-    ctx.fillStyle = "white";
-    ctx.font = "40px Arial";
-    ctx.textAlign = "center";
-    ctx.fillText("GAME OVER", canvas.width/2, canvas.height/2 - 20);
-    ctx.font = "16px Arial";
-    ctx.fillText("Press R or Enter to Restart", canvas.width/2, canvas.height/2 + 20);
-  }
-
-  // 레벨업 팝업 (중앙 표시, 점점 사라짐)
-  if (!started && !gameOver) {
-    ctx.fillStyle = "white";
-    ctx.font = "28px Arial";
-    ctx.textAlign = "center";
-    ctx.fillText("Press SPACE to Start", canvas.width/2, canvas.height/2);
-  }
-  if (levelUpTimer > 0) {
-    const level = getLevel();
-    const alpha = Math.min(1, levelUpTimer / 30); // 초반에 밝고 점점 사라짐
-    ctx.save();
-    ctx.globalAlpha = alpha;
-    ctx.fillStyle = "#ffff88";
-    ctx.strokeStyle = "#000";
-    ctx.lineWidth = 4;
-    ctx.font = "bold 42px Arial";
-    ctx.textAlign = "center";
-    const text = `LEVEL UP! Lv ${level}`;
-    ctx.strokeText(text, canvas.width/2, canvas.height/2 - 80);
-    ctx.fillText(text, canvas.width/2, canvas.height/2 - 80);
-    ctx.restore();
-  }
-}
-
-function loop() {
-  update();
-  draw();
-  requestAnimationFrame(loop);
-}
-
-loop();
-</script>
+  <!-- JS 코드 외부 파일 -->
+  <script src="game.js"></script>
+</body>
+</html>
