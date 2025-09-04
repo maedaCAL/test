@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>투두리스트 + 미니게임</title>
+  <link rel="stylesheet" href="css/gstyle.css">
+</head>
+<body>
+  <div class="container">
+
+    <!--투두리스트 영역 -->
+    <section class="todo-section">
+      <h2>Leaderboard</h2>
+      <ul id="todoList"></ul>
+    </section>
+
+    <!--테트리스 게임 영역 -->
+    <section class="game-section">
+      <h2>Mini Game</h2>
+      <div class="wrapper-container">
+        <!--게임 화면 -->
+        <canvas id="stage" width="250" height="500" style="background:black;"></canvas>
+        
+        <!--패널 -->
+        <div class="tetris-panel-container">
+          <p>Next:</p>
+          <canvas id="next" width="150" height="150" style="background:black;"></canvas>
+          <p>LINES:<span id="lines">0</span></p>
+          <p><span id="message"></span></p>
+          <button id="startBtn" onclick="tetris.startGame()">Start</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!--JS 파일은 body 끝에서 불러오기 -->
+  <script src="js/tetris.js"></script>
+  <script src="js/todo.js"></script>
+  <script>
+    // 페이지 로드 후 Tetris 객체 생성
+    var tetris = new Tetris();
+  </script>
+</body>
+</html>

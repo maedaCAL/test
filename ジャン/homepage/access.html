@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Access - 간장 포트폴리오</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/script.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=M+PLUS+Rounded+1c:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+  <style>
+    /* 기본 설정 */
+    body {
+      margin: 0;
+      font-family: "Noto Sans KR", Arial, sans-serif;
+      background: #E3EBC6; /* DMC 772 */
+      color: #404D28;       /* DMC 936 */
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    /* Access 섹션 */
+    section {
+      padding-top: 100px; /* nav에 가리지 않도록 충분히 여백 확보 */
+    }
+
+    section h2 {
+      font-size: 28px;
+      color: #7BA05B; /* 포인트 색 */
+      margin-bottom: 20px;
+    }
+
+    section p {
+      margin: 8px 0;
+      font-size: 16px;
+    }
+
+    /* 지도 박스 */
+    .map-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin: 20px 0 40px 0;
+    }
+
+    .map-container iframe {
+      width: 600px;
+      height: 400px;
+      border: 0;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+    }
+  </style>
+</head>
+<body>
+    <!--상단 네비게이션 -->
+<nav class="top-nav">
+  <a href="index.html" class="logo">
+    <img src="images/logo.png" alt="홈으로" />
+  </a>
+  <ul>
+    <li><a href="index.html">Top</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="news.html">News</a></li>
+    <li><a href="project.html">Project</a></li>
+    <li><a href="access.html">Address</a></li>
+  </ul>
+  <button class="menu-toggle">☰</button>
+</nav>
+
+<!-- 오버레이 -->
+<div id="overlay"></div>
+
+<!-- 사이드 메뉴 -->
+<aside class="side-menu" id="sideMenu">
+  <ul>
+    <li><a href="index.html" data-ja="トップ" data-en="Top">トップ</a></li>
+    <li>
+      <a href="about.html" data-ja="アバウト" data-en="About">アバウト</a>
+      <ul class="submenu">
+        <li><a href="about.html#about" data-ja="自己紹介" data-en="About Me">自己紹介</a></li>
+        <li><a href="about.html#skills" data-ja="スキル" data-en="Skills">スキル</a></li>
+        <li><a href="about.html#experience" data-ja="経歴" data-en="Experience">経歴</a></li>
+        <li><a href="about.html#vision" data-ja="ビジョン" data-en="Vision">ビジョン</a></li>
+        <li><a href="about.html#timeline" data-ja="タイムライン" data-en="Timeline">タイムライン</a></li>
+        <li><a href="about.html#hobbies" data-ja="趣味" data-en="Hobbies">趣味</a></li>
+      </ul>
+    </li>
+    <li><a href="news.html" data-ja="ニュース" data-en="News">ニュース</a></li>
+    <li><a href="project.html" data-ja="プロジェクト" data-en="Projects">プロジェクト</a></li>
+    <li><a href="access.html" data-ja="アクセス" data-en="Address">アクセス</a></li>
+  </ul>
+</aside>
+
+
+  <section>
+  <h2>Address</h2>
+
+  <!-- Google Map 삽입 -->
+  <div class="map-container">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.416115072071!2d135.499!3d34.676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e71f4e5c6b3f%3A0xa95d739b3a14a6bb!2sTODA%20BUILDING%20Shinsaibashi!5e0!3m2!1sja!2sjp!4v1234567890"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+  
+  <p data-ja="所在地: 大阪府大阪市中央区南船場4丁目4番21号 TODA BUILDING 心斎橋 12F"
+     data-en="Address: TODA BUILDING Shinsaibashi 12F, 4-4-21 Minamisemba, Chuo-ku, Osaka">
+     所在地: 大阪府大阪市中央区南船場4丁目4番21号 TODA BUILDING 心斎橋 12F
+  </p>
+
+  <p data-ja="TEL: 06-6245-2970" data-en="TEL: +81-6-6245-2970">TEL: 06-6245-2970</p>
+
+  <p data-ja="受付時間（土日祝日除く）9:00〜18:00"
+     data-en="Reception Hours: 9:00–18:00 (Closed Sat, Sun, Holidays)">
+     受付時間（土日祝日除く）9:00〜18:00
+  </p>
+</section>
+
+
+    <img id="translateBtn" src="images/ej.png" alt="Translate" class="translate-btn">
+
+  <!-- 하단 깃허브 링크 -->
+  <a href="https://github.com/간장님GitHubID" target="_blank" class="github-link">
+    <img src="images/github.png" alt="GitHub" />
+  </a>
+  <!-- 하단 인스타그램 링크 -->
+  <a href="https://www.instagram.com/__jiyun__1117" target="_blank" class="instagram-link">
+    <img src="images/instagram.png" alt="Instagram" />
+  </a>
+    <!-- 음악 -->
+<div class="music-player">
+  <button id="musicBtn">
+    <i class="fa-solid fa-pause"></i> <!-- 시작은 자동재생 중이라 정지 아이콘 -->
+  </button>
+  <audio id="bgm" autoplay loop muted>
+    <source src="images/music.mp3" type="audio/mpeg">
+    브라우저가 오디오를 지원하지 않습니다.
+  </audio>
+</div>
+
+</body>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>© 2025 ジャン・ジユン | Portfolio Website</p>
+</footer>
+
+</html>

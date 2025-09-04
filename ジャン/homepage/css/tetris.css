@@ -1,0 +1,126 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+}
+
+html {
+    touch-action: manipulation;
+}
+
+.wrapper-container {
+    display: flex;          /* 좌우 배치 */
+    flex-direction: row;    /* 가로 방향 정렬 */
+    gap: 20px;              /* 게임판과 패널 사이 여백 */
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.tetris-container {
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    background-color: #333333;
+}
+
+.tetris-panel-container {
+    display: flex;
+    flex-direction: column;  /* 위에서 아래로 쌓이게 */
+    gap: 10px;               /* 간격 */
+    color: white;
+    background-color: #333333;
+    padding: 10px;
+    border-radius: 6px;
+}
+.tetris-panel-container-padding {
+    flex-grow: 1;
+}
+
+.tetris-panel-container p {
+   margin: 0;
+   padding: 0;
+}
+
+.tetris-button-panel {
+    border-style: none;
+    width: 100%;
+}
+
+.tetris-button {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    background: #444444;
+}
+html {
+    touch-action: manipulation;
+}
+
+.wrapper-container {
+    display: inline-block;
+}
+
+.tetris-container {
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    background-color: #333333;
+}
+
+.tetris-panel-container {
+    display: flex;
+    padding-left: 10px;
+    padding-right: 10px;
+    flex-direction: column;
+    color: white;
+    background-color: #333333;
+}
+
+.tetris-panel-container-padding {
+    flex-grow: 1;
+}
+
+.tetris-panel-container p {
+   margin: 0;
+   padding: 0;
+}
+
+.tetris-button-panel {
+    border-style: none;
+    width: 100%;
+}
+
+.tetris-button {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    background: #444444;
+}
+#restartBtn {
+    margin: 10px auto;              /* 위아래는 10px, 좌우는 자동 */
+    display: block;                 /* block으로 바꿔야 margin auto가 적용됨 */
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(180deg, #333333, #444444);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 3px 0 #444444;
+    transition: all 0.2s ease;
+}
+
+
+#restartBtn:hover {
+    background: linear-gradient(180deg, #333333, #444444);
+}
+
+#restartBtn:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 #444444;
+}
+

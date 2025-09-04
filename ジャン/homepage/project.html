@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Project - ジユン ポートフォリオ</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/script.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=M+PLUS+Rounded+1c:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+</head>
+<body>
+  <!--상단 네비게이션 -->
+<nav class="top-nav">
+  <a href="index.html" class="logo">
+    <img src="images/logo.png" alt="홈으로" />
+  </a>
+  <ul>
+    <li><a href="index.html">Top</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="news.html">News</a></li>
+    <li><a href="project.html">Project</a></li>
+    <li><a href="access.html">Address</a></li>
+  </ul>
+  <button class="menu-toggle">☰</button>
+</nav>
+
+<!-- 오버레이 -->
+<div id="overlay"></div>
+
+<!-- 사이드 메뉴 -->
+<aside class="side-menu" id="sideMenu">
+  <ul>
+    <li><a href="index.html" data-ja="トップ" data-en="Top">トップ</a></li>
+    <li>
+      <a href="about.html" data-ja="アバウト" data-en="About">アバウト</a>
+      <ul class="submenu">
+        <li><a href="about.html#about" data-ja="自己紹介" data-en="About Me">自己紹介</a></li>
+        <li><a href="about.html#skills" data-ja="スキル" data-en="Skills">スキル</a></li>
+        <li><a href="about.html#experience" data-ja="経歴" data-en="Experience">経歴</a></li>
+        <li><a href="about.html#vision" data-ja="ビジョン" data-en="Vision">ビジョン</a></li>
+        <li><a href="about.html#timeline" data-ja="タイムライン" data-en="Timeline">タイムライン</a></li>
+        <li><a href="about.html#hobbies" data-ja="趣味" data-en="Hobbies">趣味</a></li>
+      </ul>
+    </li>
+    <li><a href="news.html" data-ja="ニュース" data-en="News">ニュース</a></li>
+    <li><a href="project.html" data-ja="プロジェクト" data-en="Projects">プロジェクト</a></li>
+    <li><a href="access.html" data-ja="アクセス" data-en="Address">アクセス</a></li>
+  </ul>
+</aside>
+
+  <!-- Project Section -->
+<section id="projects" style="padding:100px 20px; max-width:1000px; margin:0 auto;">
+  <h2 style="text-align:center; margin-bottom:40px; color:#7BA05B;">プロジェクト一覧</h2>
+
+  <div class="project-grid">
+    
+    <!-- プロジェクト 1 -->
+    <div class="project-card">
+      <img src="images/project1.png" alt="服ショッピングモール">
+      <h3 data-ja="服ショッピングモール" data-en="Clothing Shopping Mall">服ショッピングモール</h3>
+      <p data-ja="Java と Spring を用いて開発したショッピングサイトです。"
+         data-en="A shopping site developed using Java and Spring.">Java と Spring を用いて開発したショッピングサイトです。</p>
+      <ul>
+        <li><strong data-ja="使用言語:" data-en="Languages:">使用言語:</strong> Java, Spring</li>
+        <li><strong data-ja="機能:" data-en="Features:">機能:</strong> 会員登録、ログイン、商品購入 <span data-ja="など" data-en="etc">etc</span></li>
+      </ul>
+    </div>
+
+    <!-- プロジェクト 2 -->
+    <div class="project-card">
+      <img src="images/project2.png" alt="ドラマグッズECサイト">
+      <h3 data-ja="ドラマグッズECサイト" data-en="Drama Goods EC Site">ドラマグッズECサイト</h3>
+      <p data-ja="ドラマ関連グッズを販売するECサイトを開発しました。"
+         data-en="An EC site for selling drama-related goods.">ドラマ関連グッズを販売するECサイトを開発しました。</p>
+      <ul>
+        <li><strong data-ja="使用言語:" data-en="Languages:">使用言語:</strong> Java</li>
+        <li><strong data-ja="機能:" data-en="Features:">機能:</strong> 会員登録、ログイン、商品購入 <span data-ja="など" data-en="etc">etc</span></li>
+      </ul>
+    </div>
+
+    <!-- プロジェクト 3 -->
+    <div class="project-card">
+      <img src="images/project3.png" alt="Todoリスト / ミニゲーム">
+      <h3 data-ja="Todoリスト ＆ ミニゲーム" data-en="Todo List & Mini Game">Todoリスト ＆ ミニゲーム</h3>
+      <p data-ja="JavaScript で作成した学習用プロジェクトです。"
+         data-en="A study project created using JavaScript.">JavaScript で作成した学習用プロジェクトです。</p>
+      <ul>
+        <li><strong data-ja="使用言語:" data-en="Languages:">使用言語:</strong> JavaScript</li>
+        <li><strong data-ja="機能:" data-en="Features:">機能:</strong> Todoリストの追加・修正・削除、ミニゲーム（テトリス）<span data-ja="など" data-en="etc">etc</span></li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+
+  <img id="translateBtn" src="images/ej.png" alt="Translate" class="translate-btn">
+
+  <!-- 하단 깃허브 링크 -->
+<a href="https://github.com/간장님GitHubID" target="_blank" class="github-link">
+  <img src="images/github.png" alt="GitHub" />
+</a>
+  <!-- 하단 인스타그램 링크 -->
+  <a href="https://www.instagram.com/__jiyun__1117" target="_blank" class="instagram-link">
+    <img src="images/instagram.png" alt="Instagram" />
+  </a>
+
+    <!-- 음악 -->
+<div class="music-player">
+  <button id="musicBtn">
+    <i class="fa-solid fa-pause"></i> <!-- 시작은 자동재생 중이라 정지 아이콘 -->
+  </button>
+  <audio id="bgm" autoplay loop muted>
+    <source src="images/music.mp3" type="audio/mpeg">
+    브라우저가 오디오를 지원하지 않습니다.
+  </audio>
+</div>
+
+
+</body>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>© 2025 ジャン・ジユン | Portfolio Website</p>
+</footer>
+
+</html>

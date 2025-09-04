@@ -1,0 +1,670 @@
+
+/* 기본 설정 */
+body {
+  margin: 0;
+  font-family: 'M PLUS Rounded 1c', sans-serif; 
+  background: #E3EBC6; /* DMC 772 */
+  color: #404D28;       /* DMC 936 */
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* 제목 전용 폰트 적용 */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Kosugi Maru', sans-serif;  
+  color: #6A8F4E;  /* 살짝 더 밝은 귀여운 초록 */
+  letter-spacing: 1px;
+}
+
+
+/* =========================
+   TOP 페이지 디자인
+   ========================= */
+
+/* 메인 섹션 */
+#main {
+  height: 100vh; /* 화면 꽉 차게 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 80px; /* 네비게이션과 간격 */
+  text-align: center;
+}
+
+/* 메인 타이틀 */
+#main h1 {
+  font-size: 2.5em;
+  margin-bottom: 40px;
+  color: #7BA05B;   /* 포인트 초록색 */
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+/* 프로필 카드 */
+.profile-card {
+  margin-top: -30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;  /* 사진과 글자 사이 간격 */
+  background: #fff; /* 흰색 카드 */
+  padding: 30px 50px;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+  max-width: 600px;
+}
+
+/* 프로필 이미지 */
+.profile-img {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 4px solid #7BA05B;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* 부드럽게 */
+}
+
+/* 마우스 hover 효과 */
+.profile-img:hover {
+  transform: scale(1.05); /* 5% 확대 */
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3); /* 그림자 강화 */
+}
+
+/* 프로필 정보 */
+.profile-info {
+  text-align: left;
+  color: #404D28;
+}
+
+.profile-info h2 {
+  margin: 0 0 15px;
+  font-size: 22px;
+  color: #7BA05B;   /* 이름 포인트 색 */
+}
+
+.profile-info p {
+  margin: 8px 0;
+  font-size: 16px;
+}
+
+/* 상단 네비게이션 바 */
+.top-nav {
+  background: #404D28;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 75px;
+  z-index: 100;
+
+  display: flex;
+  align-items: center;       /* 세로 중앙 정렬 */
+  justify-content: space-between;
+  padding: 0 30px;
+}
+
+/* 로고 */
+.top-nav .logo img {
+  width: 55px;
+  height: auto;
+  cursor: pointer;
+}
+
+/* 메뉴 */
+.top-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  flex: 1;                   /* 가운데 확실히 */
+  gap: 40px;
+}
+
+.top-nav ul li a {
+  color: #E3EBC6;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 18px;
+  transition: color 0.3s;
+}
+
+.top-nav ul li a:hover {
+  color: #A8D39E;
+}
+
+/* 햄버거 버튼 → 아이콘 열로 이동 */
+.menu-toggle {
+  position: fixed;
+  top: 20px;          /* 상단바 중앙 맞춤 */
+  right: 15px;        /* 깃허브 아이콘과 같은 열 */
+  font-size: 28px;
+  background: none;
+  border: none;
+  color: #E3EBC6;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+
+/* 공통 아이콘 스타일 */
+.github-link img,
+.instagram-link img,
+.translate-btn{
+  width: 40px;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.github-link img:hover,
+.instagram-link img:hover,
+.translate-btn:hover
+{
+  transform: scale(1.1);
+}
+.translate-btn {
+  position: fixed;
+  bottom: 130px;   /* GitHub 아이콘 위 */
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  z-index: 200;
+}
+
+
+.github-link {
+  position: fixed;
+  bottom: 70px;
+  right: 15px;
+  z-index: 200;
+}
+
+.instagram-link {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  z-index: 200;
+}
+
+/* 사이드 메뉴 */
+.side-menu {
+  position: fixed;
+  top: 0;
+  right: -250px;
+  width: 250px;
+  height: 100%;
+  background: #404D28;
+  color: #E3EBC6;
+  transition: right 0.3s ease;
+  z-index: 300;
+  padding-top: 60px;
+}
+
+.side-menu.active {
+  right: 0;
+}
+
+.side-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* 사이드 메뉴 항목 구분선 */
+.side-menu ul li {
+  padding: 12px 20px;
+  border-bottom: 1px solid rgba(227, 235, 198, 0.2);
+}
+
+.side-menu ul li:last-child {
+  border-bottom: none;
+}
+
+.side-menu ul li a {
+  color: #E3EBC6;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.side-menu ul li a:hover {
+  color: #A8D39E;
+}
+
+/* 서브메뉴 (기본 숨김) */
+.submenu {
+  display: none;
+  padding-left: 20px;
+  margin-top: 5px;
+  border-left: 2px solid rgba(227, 235, 198, 0.3);
+}
+
+.submenu li {
+  font-size: 0.9em;
+}
+
+.submenu.active {
+  display: block;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 오버레이 */
+#overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 250;
+  display: none;
+}
+#overlay.active {
+  display: block;
+}
+
+/* About 섹션 */
+#about {
+  max-width: 800px;
+  margin: 100px auto;
+  text-align: center;
+  line-height: 1.8;
+}
+
+#about h2, 
+#about h3, 
+#about p {
+  text-align: center;
+}
+
+#about ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto 20px auto;
+  text-align: center;
+}
+#about ul li {
+  margin: 5px 0;
+  text-align: center;
+}
+
+/* Timeline */
+.timeline {
+  position: relative;
+  margin: 40px auto;
+  padding-left: 30px;
+  max-width: 600px;
+  border-left: 3px solid #7BA05B;
+  text-align: left;
+}
+
+.timeline-item {
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -11px;
+  top: 5px;
+  width: 16px;
+  height: 16px;
+  background: #7BA05B;
+  border-radius: 50%;
+}
+
+.timeline-date {
+  font-weight: bold;
+  color: #7BA05B;
+  margin-bottom: 5px;
+  margin-left: 20px;
+  display: inline-block;
+}
+
+.timeline-content {
+  background: rgba(255, 255, 255, 0.6);
+  padding: 8px 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Hobbies */
+#hobbies {
+  max-width: 800px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.hobby-slider {
+  position: relative;
+  max-width: 600px;
+  margin: 20px auto;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slides a {
+  min-width: 100%;
+}
+
+/* 슬라이더 이미지 */
+.slides img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;   /* contain → cover로 변경 */
+  background: #fff;
+  border-radius: 12px;
+  display: block;      /* inline-block 여백 제거 */
+}
+
+
+/* 슬라이더 버튼 */
+.hobby-slider .prev,
+.hobby-slider .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.hobby-slider .prev { left: 10px; }
+.hobby-slider .next { right: 10px; }
+
+.hobby-slider .prev:hover,
+.hobby-slider .next:hover {
+  background: rgba(0,0,0,0.8);
+}
+
+/* 부드러운 스크롤 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* =========================
+   NEWS (ToDo 리스트 디자인)
+   ========================= */
+#news-section {
+  margin-top: 120px;             /* 상단 네비게이션과 간격 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#news-section h2 {
+  margin-bottom: 20px;
+  color: #6A8F4E;               /* 다크 그린 */
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* 입력 그룹 */
+.todo-input-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  width: 100%;
+  max-width: 500px;
+}
+
+#todoInput {
+  padding: 8px;
+  flex: 1;                      /* 남은 공간 채우기 */
+  border: 2px solid #7BA05B;    /* 포인트 그린 */
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* 추가 버튼 */
+.todo-input-group button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background: #7BA05B;          /* 포인트 그린 */
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.todo-input-group button:hover {
+  background: #5E8F46;          /* hover 시 진한 그린 */
+  transform: scale(1.05);
+}
+
+.todo-input-group button:active {
+  transform: scale(0.95);
+}
+
+/* 리스트 */
+#todoList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-width: 500px;
+}
+
+/* 각 항목 카드 */
+#todoList li {
+  background: #fff;
+  margin-bottom: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px solid #7BA05B;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  transition: all 0.3s ease;
+}
+
+/* hover 효과 */
+#todoList li:hover {
+  background: #F4FBEF;          /* 연한 초록 */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* 리스트 내부 텍스트 */
+#todoList li span {
+  flex: 1;
+  text-align: left;
+  color: #404D28;
+  font-size: 14px;
+}
+
+/* 수정/삭제 버튼 */
+#todoList li button {
+  background: #7BA05B;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin-left: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#todoList li button:hover {
+  background: #5E8F46;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.project-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+/* 프로젝트 카드 안의 리스트는 왼쪽 정렬 */
+.project-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0 0;
+  text-align: left;   /* ✅ 왼쪽 정렬 */
+}
+
+.project-card ul li {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+
+.project-card:hover {
+  transform: translateY(-5px);
+}
+
+.project-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.project-card h3 {
+  margin: 10px 0;
+  color: #404D28;
+}
+
+.project-card p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.project-card a {
+  display: inline-block;
+  padding: 8px 15px;
+  background: #7BA05B;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.3s;
+}
+
+.project-card a:hover {
+  background: #A8D39E;
+}
+
+/* 푸터 항상 맨 아래 */
+.footer {
+  background: transparent;   /* 필요 시 색상 넣기 가능 */
+  text-align: center;
+  padding: 15px 0;
+  font-size: 12px;
+  color: #555;
+  margin-top: auto;   /* 아래 고정 */
+}
+
+/* =========================
+   메인 배너 (사진 1장 + 타자기 효과)
+   ========================= */
+/* 배너 */
+.banner {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+  margin-top: 100px;
+}
+
+.banner-video {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+}
+
+/* 타자기 텍스트 (배너 아래) */
+.banner-text {
+  margin-top: 40px;
+  font-size: 3em;         /* 글씨 크게 */
+  font-weight: bold;
+  color: #6A8F4E;
+  letter-spacing: 3px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* 커서 깜박임 */
+#typewriter::after {
+  content: "|";
+  display: inline-block;
+  margin-left: 5px;
+  animation: blink 0.8s infinite;
+  color: #6A8F4E;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+
+
+/* =========================
+   프로필 카드 애니메이션
+   ========================= */
+.profile-card.hidden {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s ease-out;
+}
+
+.profile-card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.music-player {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 200;
+}
+
+#musicBtn {
+  font-size: 28px;
+  background: none;   /* 배경 제거 */
+  color: #7BA05B;     /* 아이콘 색 */
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, color 0.2s;
+}
+
+#musicBtn:hover {
+  transform: scale(1.2);
+  color: #5E8F46;
+}
+
+
