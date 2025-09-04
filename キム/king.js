@@ -672,11 +672,12 @@
     // 冒険スタート → 説明画面
     adventureButton.addEventListener("click", () => {
       selectScreen.classList.add("hidden");
-      instructions = [
-        `<br><br><br><br>冷たい宇宙空間に不思議な黒い渦がある　<br><br>　飲み込まれたら誰一人帰った奴はないと言う・・・　<br><br>　だが希望はある！選んだ仲間「${selectedCharacter}」と共に戦う！<br> <br>← →キーで左右移動、スペースキーで攻撃ができる<br>　<br>侵略者たちを防いで地球を守ってぐださい！！！　<br><br><br><br>`,
-        "<br><br><br><br<br><br><br><br>悪魔の化身か・・・・　地獄の使者か・・・・なくとも・・・<br><br>　隕石の中で体を隠して、襲われるブラックホール軍団！　<br><br>　敵が上から降ってきます。撃ち落としてポイントを稼ごう！<br><br>ステージを進めば進むほど、敵！　<br>　<br><br><br>",
-        "<br> <br>「次へ」を押すとゲームが始まります！がんばって！　<br>　<br>"
-      ];
+instructions = [
+  `<br><br><br><br>冷たい宇宙空間に不思議な黒い渦がある　<br><br>　飲み込まれたら誰一人帰った奴はないと言う・・・　<br><br>　だが希望はある！選んだ仲間「${selectedCharacter}」と共に戦う！<br> <br>← →キーで左右移動、スペースキーで攻撃ができる<br>　<br>侵略者たちを防いで地球を守ってぐださい！！！　<br><br><br><br>`,
+  `<br><br><br><br>悪魔の化身か・・・・　地獄の使者か・・・・なくとも・・・<br><br>　隕石の中で体を隠して、襲われるブラックホール軍団！　<br><br>　敵が上から降ってきます。撃ち落としてポイントを稼ごう！<br><br>ステージを進めば進むほど、敵！　<br>　<br><br><br>`,
+  `<br><br>「次へ」を押すと、ワープホールに入ってゲームが始まります！<br><br><img src="attack.png" alt="ゲームのイラスト" style="width: 250px; height: auto;" /><br>`
+];
+
       instructionIndex = 0;
       showInstruction();
       instructionScreen.classList.remove("hidden");
